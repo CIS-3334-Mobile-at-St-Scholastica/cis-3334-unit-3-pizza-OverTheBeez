@@ -47,6 +47,16 @@ public class MainActivity extends AppCompatActivity {
         // creating viewModel
         viewModel = new ViewModelProvider(this).get(ViewModel.class);
 
+        final Observer<String> statusObserver = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String newStatus) {
+                textOrder.setText(textOrder.getText().toString() + "\n" + newStatus );
+
+            }
+        };
+
+        viewModel.getOrderStatus().observe(this, statusObserver);
+
         /***
          *   Handle SeekBar changes
          */
@@ -71,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Log.d("CIS 3334", "Place order button clicked");   // log button click for debugging using "CIS 3334" tag
+                viewModel.placeOrder();
             }
         });
 
