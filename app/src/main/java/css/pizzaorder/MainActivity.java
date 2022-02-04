@@ -27,6 +27,9 @@ public class MainActivity extends AppCompatActivity {
     Integer pizzaSize = 1;     // Pizza sizes are 0=Small, 1=Medium, 2=Large, 3=X-large
     final String[] PIZZA_SIZES = {"Small","Medium","Large","X-Large"};
 
+    // initializing viewModel
+    ViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
         chipPepperoni = findViewById(R.id.chipPepperoni);
         chipChicken = findViewById(R.id.chipChicken);
         chipGreenPepper = findViewById(R.id.chipGreenPeppers);
+
+        // creating viewModel
+        viewModel = new ViewModelProvider(this).get(ViewModel.class);
 
         /***
          *   Handle SeekBar changes
@@ -74,8 +80,10 @@ public class MainActivity extends AppCompatActivity {
         buttonAddToOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                viewModel.addToOrder(getToppings(), pizzaSize);
+                textOrder.setText(viewModel.getOrder());
                 Log.d("CIS 3334", "Add To Order button clicked");   // log button click for debugging using "CIS 3334" tag
-            }
+                            }
         });
 
     }
